@@ -1,0 +1,85 @@
+/* === Admin Panel === */
+.admin-container {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #0f0f0f;
+  color: #fff;
+  padding: 4rem 2rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.admin-title {
+  font-size: 2.5rem;
+  text-align: center;
+  color: #00ffd5;
+  margin-bottom: 2.5rem;
+}
+
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.admin-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-label {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.admin-input,
+.admin-textarea,
+.admin-select {
+  background-color: #1a1a1a;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.8rem;
+  font-size: 1rem;
+  outline: none;
+}
+
+.admin-input:focus,
+.admin-textarea:focus,
+.admin-select:focus {
+  border: 1px solid #00ffd5;
+}
+
+.admin-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.admin-file-input {
+  background: none;
+  color: white;
+  font-size: 1rem;
+  padding: 0.5rem 0;
+}
+
+.admin-submit-btn {
+  background-color: #00ffd5;
+  color: #000;
+  border: none;
+  padding: 0.8rem 1.6rem;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.admin-submit-btn:hover {
+  background-color: #00e6c2;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #0f0f0f;
+  color: #fff;
+}

@@ -3,56 +3,18 @@ from flask_cors import CORS
 from pymongo import MongoClient
 import os
 from werkzeug.utils import secure_filename
-from PIL import Image
-import imagehash
 
 app = Flask(__name__)
 CORS(app)
 
 # MongoDB config
-client = MongoClient('mongodb://localhost:27017/')
+client = MongoClient('mongodb+srv://VatsalBairagi:Vatsal2004@vatsal.vgheuph.mongodb.net/')
 db = client['final_wallpaper']
 wallpapers_collection = db['wallpapers']
 
 # Folder to store uploaded images
 UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-
-# Utility to compute perceptual hash
-def compute_phash(image_path):
-    try:
-        with Image.open(image_path) as img:
-            return imagehash.phash(img)
-    except Exception as e:
-        print(f"Error computing hash for {image_path}: {e}")
-        return None
-
-# Check if two hashes are similar
-def is_similar(hash1, hash2, threshold=5):
-    return hash1 - hash2 <= threshold
-
-# Remove visually similar images
-def filter_similar_wallpapers(wallpapers):
-    seen_hashes = []
-    unique_wallpapers = []
-
-    for wp in wallpapers:
-        image_url = wp.get('image_url', '')
-        if not image_url:
-            continue
-        image_path = image_url.lstrip('/')
-        full_path = os.path.join(os.getcwd(), image_path)
-        phash = compute_phash(full_path)
-        if phash is None:
-            continue
-
-        if any(is_similar(phash, h) for h in seen_hashes):
-            continue
-
-        seen_hashes.append(phash)
-        unique_wallpapers.append(wp)
-
-    return unique_wallpapers
 
 @app.route('/api/upload-wallpaper', methods=['POST'])
 def upload_wallpaper():
@@ -100,8 +62,7 @@ def get_wallpapers():
         wallpapers = list(wallpapers_collection.find())
         for wp in wallpapers:
             wp['_id'] = str(wp['_id'])  # Convert ObjectId to string
-        unique_wallpapers = filter_similar_wallpapers(wallpapers)
-        return jsonify({'wallpapers': unique_wallpapers})
+        return jsonify({'wallpapers': wallpapers})
     except Exception as e:
         print('GET WALLPAPERS ERROR:', str(e))
         return jsonify({'error': 'Failed to fetch wallpapers'}), 500
